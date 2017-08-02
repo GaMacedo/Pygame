@@ -13,8 +13,8 @@ MAP_WIDHT = 30
 MAP_HEIGHT = 30
 
 #Player Position
-P_POS_X = 350
-P_POS_Y = 250
+P_POS_X = 5
+P_POS_Y = 5
 
 #Color Definitions
 COLOR_BLACK = (0,0,0)

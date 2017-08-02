@@ -1,7 +1,8 @@
 import pygame
-
-#Game files
+import libtcodpy as libtcod
+# Game files
 import Constants
+
 
 #   ______
 #  / _____) _                       _
@@ -14,6 +15,31 @@ import Constants
 class struct_Tile:
     def __init__(self, block_path):
         self.block_path = block_path
+
+
+#    ___ _     _           _
+#   /___\ |__ (_) ___  ___| |_ ___
+#  //  // '_ \| |/ _ \/ __| __/ __|
+# / \_//| |_) | |  __/ (__| |_\__ \
+# \___/ |_.__// |\___|\___|\__|___/
+#           |__/
+
+class obj_Actor:
+    def __init__(self, x, y, sprite):
+        self.x = x   # Map address
+        self.y = y
+        self.sprite = sprite
+
+    def draw(self):
+        SURFACE_MAIN.blit(self.sprite, (self.x * Constants.CELL_WIDTH, self.y * Constants.CELL_HEIGHT))
+
+    def move(self, dx, dy):
+        if GAME_MAP[self.x + dx][self.y + dy].block_path == False:
+            self.x += dx
+            self.y += dy
+
+
+
 
 #  _______
 # (_______)
@@ -51,7 +77,7 @@ def draw_game():
     draw_map(GAME_MAP)
 
     #Draw the character
-    SURFACE_MAIN.blit(Constants.S_PLAYER, (Constants.P_POS_X,Constants.P_POS_Y))
+    PLAYER.draw()
 
     #Update display
     pygame.display.flip()
@@ -88,18 +114,25 @@ def game_main_loop():
             if event.type == pygame.QUIT:
                 game_quit = True
 
-        #Player movement
-        if (pygame.key.get_pressed()[pygame.K_UP] != 0):
-            Constants.P_POS_Y = Constants.P_POS_Y - 0.5
-        if (pygame.key.get_pressed()[pygame.K_DOWN] != 0):
-            Constants.P_POS_Y = Constants.P_POS_Y + 0.5
-        if (pygame.key.get_pressed()[pygame.K_RIGHT] != 0):
-            Constants.P_POS_X = Constants.P_POS_X + 0.5
-        if (pygame.key.get_pressed()[pygame.K_LEFT] != 0):
-            Constants.P_POS_X = Constants.P_POS_X - 0.5
+            # Move Player
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_k or event.key == pygame.K_KP8:
+                    PLAYER.move(0, -1)
+                if event.key == pygame.K_j or event.key == pygame.K_KP2:
+                    PLAYER.move(0, 1)
+                if event.key == pygame.K_l or event.key == pygame.K_KP6:
+                    PLAYER.move(1, 0)
+                if event.key == pygame.K_h or event.key == pygame.K_KP4:
+                    PLAYER.move(-1, 0)
+                if event.key == pygame.K_u or event.key == pygame.K_KP9:
+                    PLAYER.move(1, -1)
+                if event.key == pygame.K_y or event.key == pygame.K_KP7:
+                    PLAYER.move(-1, -1)
+                if event.key == pygame.K_n or event.key == pygame.K_KP3:
+                    PLAYER.move(1, 1)
+                if event.key == pygame.K_b or event.key == pygame.K_KP1:
+                    PLAYER.move(-1, 1)
 
-        # Draw the map
-        # Draw_map(GAME_MAP)
 
         #Draw the game
         draw_game()
@@ -118,12 +151,14 @@ def game_main_loop():
 def game_initialize():
     '''This function initialize the game'''
 
-    global SURFACE_MAIN, GAME_MAP
+    global SURFACE_MAIN, GAME_MAP, PLAYER
 
     pygame.init()
 
     SURFACE_MAIN = pygame.display.set_mode((Constants.GAME_WIDTH,Constants.GAME_HEIGH))
     GAME_MAP = map_create()
+
+    PLAYER = obj_Actor(Constants.P_POS_X,Constants.P_POS_Y,Constants.S_PLAYER)
 
 
 
