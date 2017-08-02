@@ -2,25 +2,29 @@ import pygame
 
 pygame.init()
 
-#Game Sizes
+#Game sizes
 GAME_WIDTH = 800
-GAME_HEIGHT = 600
-CELL_WIDHT = 32
+GAME_HEIGH = 600
+CELL_WIDTH = 32
 CELL_HEIGHT = 32
 
-#MAP VARS
-MAP_WIDTH = 30
+#Map Vars
+MAP_WIDHT = 30
 MAP_HEIGHT = 30
+
+#Player Position
+P_POS_X = 350
+P_POS_Y = 250
 
 #Color Definitions
 COLOR_BLACK = (0,0,0)
 COLOR_WHITE = (255,255,255)
-COLOR_GREY = (100,100,100)
+COLOR_GRAY = (100,100,100)
 
-#Game Colors
-COLOR_DEFAULT_BG = COLOR_GREY
+#Game colors
+COLOR_DEFAULT_BG = COLOR_GRAY
 
 #Sprites
 S_PLAYER = pygame.image.load('Imgs/PLAYER.png')
-S_WALL = pygame.image.load('Imgs/WALL1.png')
-S_FLOOR = pygame.image.load('Imgs/FLOOR1.png')
+S_WALL1 = pygame.image.load('Imgs/WALL1.png')
+S_FLOOR = pygame.image.load('Imgs/FLOOR1.jpg')
