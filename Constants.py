@@ -28,3 +28,4 @@ COLOR_DEFAULT_BG = COLOR_GRAY
 S_PLAYER = pygame.image.load('Imgs/PLAYER.png')
 S_WALL1 = pygame.image.load('Imgs/WALL1.png')
 S_FLOOR = pygame.image.load('Imgs/FLOOR1.jpg')
+S_ENEMY1 = pygame.image.load('Imgs/ENEMY1.png')

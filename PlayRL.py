@@ -25,10 +25,15 @@ class struct_Tile:
 #           |__/
 
 class obj_Actor:
-    def __init__(self, x, y, sprite):
-        self.x = x   # Map address
-        self.y = y
-        self.sprite = sprite
+    def __init__(self, x, y, name_object, sprite, creature = None):
+		self.x = x # Map address
+		self.y = y # Map address
+		self.sprite = sprite
+		
+		if creature:
+			self.creature = creature
+			creature.owner = self
+			
 
     def draw(self):
         SURFACE_MAIN.blit(self.sprite, (self.x * Constants.CELL_WIDTH, self.y * Constants.CELL_HEIGHT))
@@ -37,6 +42,31 @@ class obj_Actor:
         if GAME_MAP[self.x + dx][self.y + dy].block_path == False:
             self.x += dx
             self.y += dy
+
+#  _____                                              _       
+# /  __ \                                            | |      
+# | /  \/ ___  _ __ ___  _ __   ___  _ __   ___ _ __ | |_ ___ 
+# | |    / _ \| '_ ` _ \| '_ \ / _ \| '_ \ / _ \ '_ \| __/ __|
+# | \__/\ (_) | | | | | | |_) | (_) | | | |  __/ | | | |_\__ \
+#  \____/\___/|_| |_| |_| .__/ \___/|_| |_|\___|_| |_|\__|___/
+#                       | |                                   
+#                       |_|                                   
+
+
+class com_Creature:
+	'''
+	Creatures have health, can damage other objects by attacking them. Can also die.
+	'''
+	def __init__(self, name_instance, hp = 10):
+		
+		self.name_instance = name_instance
+		self.hp = hp
+		
+
+# class com_Item:
+
+
+# class com_Container:
 
 
 
@@ -77,6 +107,7 @@ def draw_game():
     draw_map(GAME_MAP)
 
     #Draw the character
+    ENEMY1.draw()
     PLAYER.draw()
 
     #Update display
@@ -151,14 +182,18 @@ def game_main_loop():
 def game_initialize():
     '''This function initialize the game'''
 
-    global SURFACE_MAIN, GAME_MAP, PLAYER
+    global SURFACE_MAIN, GAME_MAP, PLAYER, ENEMY1
 
     pygame.init()
 
     SURFACE_MAIN = pygame.display.set_mode((Constants.GAME_WIDTH,Constants.GAME_HEIGH))
     GAME_MAP = map_create()
-
-    PLAYER = obj_Actor(Constants.P_POS_X,Constants.P_POS_Y,Constants.S_PLAYER)
+	
+    creature_com = com_Creature("greg")
+    PLAYER = obj_Actor(Constants.P_POS_X,Constants.P_POS_Y, "python", Constants.S_PLAYER, creature = creature_com)
+	
+    creature_com2 = com_Creature("jackie")	
+    ENEMY1 = obj_Actor(5,5, "crab", Constants.S_ENEMY1)
 
 
 
